@@ -10,8 +10,8 @@ jobs:
         build_type: [Release]
         enable_ui: [on]
         include:
-          - os: ubuntu-latest
-            build_type: Debug
+          - os: windows-latest
+            build_type: Release
             enable_ui: on
     steps:
     - uses: actions/checkout@v3
@@ -22,13 +22,9 @@ jobs:
       if: runner.os == 'Linux'
       with:
         key: ${{ matrix.os }}-${{ matrix.enable_ui }}
-    - uses: turtlesec-no/get-ninja@main
+    - uses: seanmiddleditch/gha-setup-ninja@master
     - uses: ilammy/msvc-dev-cmd@v1
       if: runner.os == 'Windows'
-    - name: Workaround for windows-2022 and cmake 3.25.0
-      if: runner.os == 'Windows'
-      shell: bash
-      run: rm -rf C:/Strawberry/
     - name: Install Dependencies
       shell: bash
       run: |
